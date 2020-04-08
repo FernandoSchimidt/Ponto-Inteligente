@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
           const usuarioData = JSON.parse(
             atob(data['data']['token'].split('.')[1]));
           if (usuarioData['role'] == 'ROLE_ADMIN') {
-            alert('Deve rediricionar para a pagina de admin');
+            this.router.navigate(['/admin'])
           } else {
-            alert('Deve rediricionar para a pagina de funcionario');
+            this.router.navigate(['/funcionario'])
           }
         },
         err => {

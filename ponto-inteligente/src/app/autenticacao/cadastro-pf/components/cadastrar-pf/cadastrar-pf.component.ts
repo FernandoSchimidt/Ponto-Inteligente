@@ -1,4 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { Router } from '@angular/router'
+import { from } from 'rxjs';
+
+import {
+  CpfValidator,
+  CnpjValidator
+} from '../../../../shared/validators'
+
+import { CadastroPf } from '../../models';
+import { CadastrarPfService } from '../../services'
 
 @Component({
   selector: 'app-cadastrar-pf',
@@ -7,9 +19,48 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CadastrarPfComponent implements OnInit {
 
-  constructor() { }
+  form: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private cadastarPfService: CadastrarPfService
+  ) { }
 
   ngOnInit(): void {
+    this.gerarForm();
+  }
+  gerarForm() {
+    this.form = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      senha: ['', [Validators.required, Validators.minLength(6)]],
+      cpf: ['', [Validators.required, CpfValidator]],
+      cnpj: ['', [Validators.required, CnpjValidator]]
+    });
+  }
+  cadastrarPf() {
+    if (this.form.invalid) {
+      return;
+    }
+    const cadastroPf: CadastroPf = this.form.value;
+    this.cadastarPfService.cadastrar(cadastroPf)
+      .subscribe(
+        data => {
+          const msg: string = "Realize p=o login para acessar o sistema."
+          this.snackBar.open(msg, "Sucesso", { duration: 5000 });
+          this.router.navigate(['/login']);
+        },
+        err => {
+          let msg: string = "Tente novamente em instantes.";
+          if (err.status == 400) {
+            msg = err.error.errors.join('')
+          }
+          this.snackBar.open(msg, "Erro", { duration: 5000 })
+        }
+      )
+    return false
   }
 
 }
