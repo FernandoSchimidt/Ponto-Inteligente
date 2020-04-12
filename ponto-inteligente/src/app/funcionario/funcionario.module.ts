@@ -16,6 +16,8 @@ import {
   PtBrMatPaginatorIntl
 } from '../shared'
 
+import { SharedModule } from '../shared/shared.module'
+
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
@@ -48,6 +50,7 @@ import { MatCardModule } from '@angular/material/card';
     MatPaginatorModule,
     MatSortModule,
     MatCardModule,
+    SharedModule
   ],
   providers: [
     HttpUtilService,

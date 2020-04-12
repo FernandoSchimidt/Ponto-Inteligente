@@ -16,6 +16,7 @@ import {
 } from './autenticacao'
 import { AppRoutingModule } from './app-routing.module'
 import { FuncionarioModule, FuncionarioRoutingModule } from './funcionario'
+import { AdminModule, AdminRoutingModule } from './admin'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import { FuncionarioModule, FuncionarioRoutingModule } from './funcionario'
     MatIconModule,
     FuncionarioModule,
     FuncionarioRoutingModule,
+    AdminModule,
+    AdminRoutingModule,
 
     AppRoutingModule
   ],
