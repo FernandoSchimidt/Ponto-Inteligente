@@ -23,12 +23,13 @@ import { MatSortModule } from '@angular/material/sort';
 import { FlexLayoutModule } from '@angular/flex-layout'
 
 import { SharedModule } from '../shared/shared.module'
-
+import { AdminGuard } from './services'
 import {
   CadastroComponent,
   ListagemComponent,
   AtualizacaoComponent,
-  AdminComponent
+  AdminComponent,
+  ConfirmarDialog
 } from './components';
 
 import {
@@ -44,6 +45,7 @@ import {
     CadastroComponent,
     AdminComponent,
     AtualizacaoComponent,
+    ConfirmarDialog
 
   ],
   imports: [
@@ -70,11 +72,13 @@ import {
   ],
   providers: [
     LancamentoService,
+    AdminGuard,
     HttpUtilService,
     MatPaginatorIntl,
     FuncionarioService,
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: MatPaginatorIntl, useClass: PtBrMatPaginatorIntl }
   ],
+  entryComponents: [ConfirmarDialog]
 })
 export class AdminModule { }
